@@ -1,0 +1,6 @@
+[Ynjxsjmh]
+# api token
+api_id = 123
+api_hash = abs
+[checkin]
+bots = ["@bot_name_1", "@bot_name_2"]
