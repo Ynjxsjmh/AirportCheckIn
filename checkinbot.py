@@ -3,7 +3,6 @@
 import asyncio
 import logging
 import json
-import socks
 import sys
 from configparser import ConfigParser
 from os import listdir, path
@@ -35,7 +34,7 @@ class CheckInBot:
                 self.logger.warning(f"Invalid configration in {configsection}")
 
         try:
-            self.client = TelegramClient(self.name, self.api_id, self.api_hash, proxy=(socks.SOCKS5, "127.0.0.1", 10890, True))
+            self.client = TelegramClient(self.name, self.api_id, self.api_hash)
         except (NameError, AttributeError):
             raise ValueError("Invalid configration: need api_id and api_hash")
 
