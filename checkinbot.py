@@ -19,6 +19,7 @@ class CheckInBot:
         self.logger = logging.getLogger("userbot")
         config = ConfigParser()
         config.read(path.join(path.dirname(__file__), "config.ini"))
+        self.bots = {}
 
         for configsection in config:
             if ("api_id" in config[configsection] and
@@ -26,8 +27,8 @@ class CheckInBot:
                 self.api_id = config[configsection]["api_id"]
                 self.api_hash = config[configsection]["api_hash"]
                 self.name = configsection
-            elif "bots" in config[configsection]:
-                self.bots = json.loads(config.get("checkin", "bots"))
+            elif "message" in config[configsection]:
+                self.bots[configsection] = config[configsection]["message"]
             elif configsection == "DEFAULT":
                 continue
             else:
@@ -45,7 +46,7 @@ class CheckInBot:
     async def send_checkin_to_bots(self):
         # wait for all client.send_message to complete
         await asyncio.wait([
-            self.userbot.send_message(bot, '/checkin')
+            self.userbot.send_message(bot, self.bots[bot])
             for bot in self.bots
         ])
 
